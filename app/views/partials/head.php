@@ -1,0 +1,16 @@
+<?php
+
+$pageTitle = $pageTitle ?? APP_NAME;
+$pageDescription = $pageDescription ?? 'LUMINA - Shop mắt kính trực tuyến';
+?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= e($pageTitle) ?></title>
+    <meta name="description" content="<?= e($pageDescription) ?>">
+    <link rel="stylesheet" href="<?= e(APP_URL) ?>/assets/vendor/flaticon-uicons/css/uicons-rounded-regular.css">
+    <link rel="stylesheet" href="<?= e(APP_URL) ?>/assets/css/style.css">
+</head>
+<body>
