@@ -2,9 +2,7 @@
 require_once __DIR__ . '/../app/config/config.php';
 require_once __DIR__ . '/../app/helpers/functions.php';
 
-if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
+ensure_cart_session();
 
 if (isset($_GET['remove'])) {
     $removeId = (int) $_GET['remove'];
@@ -42,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_cart'])) {
 $pageTitle = 'Giỏ hàng';
 $pageDescription = 'Giỏ hàng của bạn - ' . APP_NAME;
 $headerKeyword = '';
-$cartItems = array_values($_SESSION['cart']);
+$cartItems = cart_items();
 $placeholderImage = APP_URL . '/assets/images/placeholder-glasses.png';
 
 include BASE_PATH . '/app/views/partials/head.php';
@@ -150,8 +148,11 @@ include BASE_PATH . '/app/views/partials/header.php';
                         <strong><?= format_price(cart_total()) ?></strong>
                     </div>
 
-                    <button type="button" class="btn btn-primary btn-block">Tiến hành checkout</button>
-                    <p class="summary-note">Bước kế tiếp là làm trang checkout và tạo đơn hàng từ giỏ này.</p>
+                    <a href="<?= e(APP_URL) ?>/checkout.php" class="btn btn-primary btn-block cart-checkout-btn">
+                        <i class="fi fi-rr-credit-card icon icon-sm"></i>
+                        Tiến hành checkout
+                    </a>
+                    <p class="summary-note">Bước kế tiếp sẽ tạo dữ liệu vào bảng <code>orders</code> và <code>order_items</code>.</p>
                 </aside>
             </div>
         <?php endif; ?>

@@ -1,5 +1,5 @@
 USE lumina_db;
-
+SET NAMES utf8mb4;
 INSERT INTO roles (name, description) VALUES
 ('customer', 'Customer / buyer'),
 ('sales', 'Sales and support staff'),

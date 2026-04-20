@@ -31,7 +31,7 @@ final class Database
 
         try {
             self::$connection = new PDO($dsn, $username, $password, $options);
-            self::$connection->exec('SET NAMES utf8mb4');
+            self::$connection->exec("SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci");
             return self::$connection;
         } catch (PDOException $exception) {
             http_response_code(500);
