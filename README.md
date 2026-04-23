@@ -33,7 +33,7 @@ Bạn cần tự chép bộ `Regular Rounded` vào thư mục:
 `public/assets/vendor/flaticon-uicons/`
 
 Cấu trúc:
-- `css/uicons-rounded-regular.css`
+- `css/uicons-regular-rounded.css`
 - `webfonts/...`
 
 ## Nếu muốn import lại DB từ đầu
