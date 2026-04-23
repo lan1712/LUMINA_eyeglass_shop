@@ -1,6 +1,10 @@
 <?php
+
 require_once __DIR__ . '/../../../app/config/config.php';
-require_once __DIR__ . '/../../../app/helpers/functions.php';
+require_once BASE_PATH . '/app/helpers/functions.php';
+require_once BASE_PATH . '/app/middleware/auth.php';
+
+admin_only();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . APP_URL . '/admin/orders/index.php');

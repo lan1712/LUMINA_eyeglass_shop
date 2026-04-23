@@ -340,6 +340,9 @@ try {
 
     $db->commit();
 
+    remember_recent_order_code($orderCode);
+    grant_order_access($orderCode);
+
     $_SESSION['cart'] = [];
     clear_old_input();
     flash_set('checkout_notice', 'Đặt hàng thành công. Hệ thống đã tạo đơn hàng cho bạn.');

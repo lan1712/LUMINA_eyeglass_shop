@@ -53,8 +53,8 @@ include BASE_PATH . '/app/views/partials/header.php';
             <h1>Cảm ơn bạn đã mua hàng tại LUMINA</h1>
             <p>Đơn hàng <strong><?= e($order['order_code']) ?></strong> đã được tạo thành công. Bạn có thể dùng mã này để demo luồng quản lý đơn ở phần admin sau.</p>
             <div class="hero-actions">
-                <a href="<?= e(APP_URL) ?>/products.php" class="btn btn-primary">Tiếp tục mua sắm</a>
-                <a href="<?= e(APP_URL) ?>/cart.php" class="btn btn-secondary">Về giỏ hàng</a>
+                <a href="<?= e(APP_URL) ?>/orders.php" class="btn btn-primary">Xem lịch sử đơn</a>
+                <a href="<?= e(APP_URL) ?>/order-detail.php?code=<?= urlencode((string) $order['order_code']) ?>" class="btn btn-secondary">Chi tiết đơn này</a>
             </div>
         </section>
 
