@@ -1939,3 +1939,141 @@ button, input, select, textarea { font: inherit; }
         grid-template-columns: 1fr;
     }
 }
+/* =========================
+   LUMINA SIMPLE PREMIUM NAVBAR
+   Dán ở cuối style.css
+   ========================= */
+
+.lumina-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(232, 232, 232, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.lumina-navbar .nav-container {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 12px 0 14px;
+}
+
+.lumina-navbar .nav-topbar {
+    display: grid;
+    grid-template-columns: 220px minmax(320px, 1fr) auto;
+    align-items: center;
+    gap: 22px;
+}
+
+.lumina-navbar .nav-brand {
+    min-width: 0;
+}
+
+.lumina-navbar .nav-search {
+    width: min(700px, 100%);
+    justify-self: center;
+}
+
+.lumina-navbar .nav-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.lumina-navbar .nav-simple-wrap {
+    padding: 12px 0 0;
+}
+
+.lumina-navbar .nav-simple-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    overflow: visible;
+}
+
+.lumina-navbar .nav-link {
+    min-height: 42px;
+    padding: 10px 15px;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid transparent;
+    transition: 0.18s ease;
+    white-space: nowrap;
+}
+
+.lumina-navbar .nav-link:hover,
+.lumina-navbar .nav-link.active {
+    background: #fff;
+    color: var(--text);
+    border-color: var(--border);
+    box-shadow: var(--shadow);
+    transform: translateY(-1px);
+}
+
+/* ép tắt toàn bộ dropdown cũ nếu còn sót trong header */
+.lumina-navbar .nav-dropdown-panel,
+.lumina-navbar .dropdown-head,
+.lumina-navbar .dropdown-grid {
+    display: none !important;
+}
+
+/* ẩn checkbox/menu burger cũ nếu còn sót */
+.lumina-navbar .nav-toggle-input,
+.lumina-navbar .nav-mobile-toggle {
+    display: none !important;
+}
+
+@media (max-width: 980px) {
+    .lumina-navbar .nav-topbar {
+        grid-template-columns: 1fr auto;
+    }
+
+    .lumina-navbar .nav-search {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        justify-self: stretch;
+    }
+
+    .lumina-navbar .nav-actions {
+        justify-content: flex-end;
+    }
+
+    .lumina-navbar .nav-simple-menu {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+
+    .lumina-navbar .nav-link {
+        flex: 0 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .lumina-navbar .nav-container {
+        width: min(100% - 24px, 1180px);
+    }
+
+    .lumina-navbar .nav-topbar {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .lumina-navbar .nav-actions {
+        justify-content: flex-start;
+    }
+
+    .lumina-navbar .nav-search {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}

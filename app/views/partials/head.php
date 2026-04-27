@@ -1,7 +1,6 @@
 <?php
-
 $pageTitle = $pageTitle ?? APP_NAME;
-$pageDescription = $pageDescription ?? 'LUMINA - Shop mắt kính trực tuyến';
+$pageDescription = $pageDescription ?? 'LUMINA Eyewear Store';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -10,7 +9,9 @@ $pageDescription = $pageDescription ?? 'LUMINA - Shop mắt kính trực tuyến
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($pageTitle) ?></title>
     <meta name="description" content="<?= e($pageDescription) ?>">
+
     <link rel="stylesheet" href="<?= e(APP_URL) ?>/assets/vendor/flaticon-uicons/css/uicons-regular-rounded.css">
     <link rel="stylesheet" href="<?= e(APP_URL) ?>/assets/css/style.css">
+
 </head>
 <body>

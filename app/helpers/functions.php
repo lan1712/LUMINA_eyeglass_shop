@@ -296,11 +296,13 @@ if (!function_exists('logout_user')) {
     function logout_user(): void
     {
         unset($_SESSION['auth_user']);
+        unset($_SESSION['user']);
         unset($_SESSION['recent_order_codes']);
         unset($_SESSION['order_access']);
         unset($_SESSION['order_access_codes']);
         unset($_SESSION['last_order_id']);
         unset($_SESSION['last_order_code']);
+        unset($_SESSION['intended_url']);
 
         session_regenerate_id(true);
     }
