@@ -1,13 +1,21 @@
 <?php
-
 require_once dirname(__DIR__) . '/app/config/config.php';
 require_once BASE_PATH . '/app/helpers/functions.php';
 
 $db = Database::connect();
+$placeholderImage = APP_URL . '/assets/images/placeholder-glasses.png';
+
+function lumina_img(?string $url, string $placeholder): string
+{
+    $url = trim((string) $url);
+    if ($url === '') return $placeholder;
+    if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://') || str_starts_with($url, '/')) return $url;
+    return APP_URL . '/' . ltrim($url, '/');
+}
 
 $productStmt = $db->query(
     "SELECT p.id, p.name, p.slug, p.brand, p.default_price, p.compare_at_price, p.thumbnail,
-            p.is_prescription_supported, p.shape, c.name AS category_name, c.category_type
+            p.short_description, p.shape, p.material, c.name AS category_name, c.slug AS category_slug
      FROM products p
      LEFT JOIN categories c ON c.id = p.category_id
      WHERE p.status = 'active'
@@ -16,141 +24,115 @@ $productStmt = $db->query(
 );
 $products = $productStmt->fetchAll();
 
+$heroProduct = $products[0] ?? null;
 $categoryStmt = $db->query(
-    "SELECT id, name, slug, category_type
-     FROM categories
-     WHERE is_active = 1 AND parent_id IS NULL
-     ORDER BY sort_order ASC, id ASC
-     LIMIT 6"
+    "SELECT c.id, c.name, c.slug, c.description, COUNT(p.id) AS products_count
+     FROM categories c
+     LEFT JOIN categories child ON child.parent_id = c.id AND child.is_active = 1
+     LEFT JOIN products p ON p.status = 'active' AND (p.category_id = c.id OR p.category_id = child.id)
+     WHERE c.is_active = 1 AND c.parent_id IS NULL
+     GROUP BY c.id
+     ORDER BY c.sort_order ASC, c.id ASC
+     LIMIT 3"
 );
 $categories = $categoryStmt->fetchAll();
 
-$pageTitle = APP_NAME . ' - Trang chủ';
-$pageDescription = 'Shop mắt kính trực tuyến với gọng kính, kính mát, tròng kính và đơn prescription.';
-$headerKeyword = '';
-$placeholderImage = APP_URL . '/assets/images/placeholder-glasses.png';
-
+$pageTitle = APP_NAME . ' - Bộ sưu tập kính mắt premium';
+$pageDescription = 'LUMINA - Gọng kính, kính mát và tròng kính với giao diện premium.';
 require_once BASE_PATH . '/app/views/partials/head.php';
 require_once BASE_PATH . '/app/views/partials/header.php';
 ?>
-<main class="page-section">
-    <div class="container">
-        <section class="hero">
-            <div>
-                <p class="eyebrow">Shop mắt kính trực tuyến</p>
-                <h1>Chọn kính đẹp, đúng nhu cầu và dễ đặt mua hơn.</h1>
-                <p>
-                    LUMINA hỗ trợ mua kính có sẵn, đặt trước khi hết hàng và đặt làm kính theo đơn prescription.
-                    Giao diện được tối ưu để bạn xem mẫu nhanh, so sánh dễ và đặt hàng thuận tiện.
-                </p>
-                <div class="hero-actions">
-                    <a class="btn-primary" href="<?= e(APP_URL) ?>/products.php">
-                        <i class="fi fi-rr-search icon icon-sm"></i>
-                        Khám phá sản phẩm
-                    </a>
-                    <a class="btn-outline" href="<?= e(APP_URL) ?>/products.php?type=frame">
-                        <i class="fi fi-rr-glasses icon icon-sm"></i>
-                        Xem gọng kính
-                    </a>
-                </div>
-            </div>
+<?php if ($message = get_flash('success')): ?>
+  <div class="source-flash"><div class="source-flash-inner"><?= e($message) ?></div></div>
+<?php endif; ?>
 
-            <aside class="hero-card">
-                <h3>Điểm mạnh của đồ án</h3>
-                <ul>
-                    <li>
-                        <i class="fi fi-rr-check icon"></i>
-                        Có đủ 3 luồng đơn hàng: available, pre-order và prescription.
-                    </li>
-                    <li>
-                        <i class="fi fi-rr-check icon"></i>
-                        Dễ mở rộng cho quản lý đơn, vận hành và admin về sau.
-                    </li>
-                    <li>
-                        <i class="fi fi-rr-check icon"></i>
-                        Thiết kế sáng, hiện đại, đồng bộ icon Regular Rounded.
-                    </li>
-                </ul>
-            </aside>
-        </section>
-
-        <section>
-            <div class="section-head">
-                <div>
-                    <h2>Danh mục nổi bật</h2>
-                    <p>Bắt đầu từ nhóm sản phẩm chính đúng với đề tài của bạn.</p>
-                </div>
-            </div>
-
-            <div class="category-pills">
-                <?php foreach ($categories as $category): ?>
-                    <a class="category-pill" href="<?= e(APP_URL) ?>/products.php?category=<?= (int) $category['id'] ?>">
-                        <i class="fi fi-rr-apps icon icon-sm"></i>
-                        <?= e($category['name']) ?>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-        </section>
-
-        <section>
-            <div class="section-head">
-                <div>
-                    <h2>Sản phẩm mới</h2>
-                    <p>Một số mẫu đang hiển thị từ dữ liệu seed trong MySQL.</p>
-                </div>
-                <a class="link-inline" href="<?= e(APP_URL) ?>/products.php">Xem tất cả</a>
-            </div>
-
-            <div class="product-grid">
-                <?php foreach ($products as $product): ?>
-                    <article class="product-card">
-                        <a class="product-card-link" href="<?= e(APP_URL) ?>/product-detail.php?id=<?= (int) $product['id'] ?>">
-                            <div class="product-thumb">
-                                <button class="icon-btn wishlist-btn" type="button" aria-label="Yêu thích">
-                                    <i class="fi fi-rr-heart icon"></i>
-                                </button>
-                                <img
-                                    src="<?= e($product['thumbnail'] ?: $placeholderImage) ?>"
-                                    alt="<?= e($product['name']) ?>"
-                                    onerror="this.onerror=null;this.src='<?= e($placeholderImage) ?>';"
-                                >
-                            </div>
-
-                            <div class="product-body">
-                                <div class="product-meta">
-                                    <span class="meta-chip">
-                                        <i class="fi fi-rr-apps icon icon-sm"></i>
-                                        <?= e($product['category_name']) ?>
-                                    </span>
-                                    <?php if (!empty($product['shape'])): ?>
-                                        <span class="meta-chip"><?= e($product['shape']) ?></span>
-                                    <?php endif; ?>
-                                </div>
-
-                                <h3><?= e($product['name']) ?></h3>
-                                <p><?= e($product['brand'] ?: 'LUMINA') ?></p>
-
-                                <div class="product-flags">
-                                    <?php if ((int) $product['is_prescription_supported'] === 1): ?>
-                                        <span class="badge badge-primary">
-                                            <i class="fi fi-rr-eye icon icon-sm"></i>
-                                            Prescription
-                                        </span>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="price-row">
-                                    <span class="price-current"><?= number_format((float) $product['default_price'], 0, ',', '.') ?>₫</span>
-                                    <?php if (!empty($product['compare_at_price'])): ?>
-                                        <span class="price-old"><?= number_format((float) $product['compare_at_price'], 0, ',', '.') ?>₫</span>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        </section>
+<section class="hero hero-source-dark">
+  <div class="hero-container">
+    <div class="hero-content">
+      <span class="hero-label">Bộ sưu tập mới <?= date('Y') ?></span>
+      <h1 class="hero-title">Nhìn Thế Giới<br>Với Phong Cách</h1>
+      <p class="hero-description">Khám phá bộ sưu tập kính mắt cao cấp của LUMINA. Thiết kế tinh tế, công nghệ tròng kính hiện đại và trải nghiệm mua kính trực tuyến rõ ràng, nhanh, dễ quản lý.</p>
+      <a href="<?= e(APP_URL) ?>/products.php" class="hero-btn">Khám phá ngay</a>
+      <a href="<?= e(APP_URL) ?>/products.php?category=gong-kinh" class="hero-btn secondary">Xem gọng kính</a>
+      <div class="source-feature-row">
+        <span>✓ Kính mắt chính hãng</span>
+        <span>✓ Tư vấn miễn phí</span>
+        <span>✓ Có pre-order & prescription</span>
+      </div>
     </div>
-</main>
+    <?php if ($heroProduct): ?>
+      <div class="hero-image-wrapper">
+        <img src="<?= e(lumina_img($heroProduct['thumbnail'] ?? '', $placeholderImage)) ?>" alt="<?= e($heroProduct['name']) ?>" class="hero-image" loading="eager">
+      </div>
+    <?php endif; ?>
+  </div>
+</section>
+
+<section class="category-cards-section">
+  <div class="catalog-container">
+    <h2 class="section-heading">Khám phá theo danh mục</h2>
+    <div class="category-cards-grid">
+      <?php foreach ($categories as $category): ?>
+        <a class="category-card source-card-link" href="<?= e(APP_URL) ?>/products.php?category=<?= e($category['slug']) ?>" style="background: linear-gradient(135deg, #111827 0%, #475569 100%)">
+          <h3 class="category-card-name"><?= e($category['name']) ?></h3>
+          <p class="category-card-description"><?= e($category['description'] ?: 'Khám phá bộ sưu tập theo nhu cầu của bạn.') ?></p>
+          <div class="category-card-cta">Xem <?= (int) $category['products_count'] ?> sản phẩm
+            <svg class="category-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"></path></svg>
+          </div>
+        </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<section class="products">
+  <div class="products-container">
+    <div class="products-header">
+      <h2 class="products-title">Mẫu mới tại LUMINA</h2>
+      <a href="<?= e(APP_URL) ?>/products.php" class="products-view-all">Xem tất cả</a>
+    </div>
+    <div class="products-grid">
+      <?php foreach ($products as $product): ?>
+        <a href="<?= e(APP_URL) ?>/product-detail.php?id=<?= (int) $product['id'] ?>" class="product-card">
+          <div class="product-image-wrapper">
+            <?php if (!empty($product['compare_at_price']) && (float) $product['compare_at_price'] > (float) $product['default_price']): ?>
+              <div class="product-badge">Sale</div>
+            <?php endif; ?>
+            <img src="<?= e(lumina_img($product['thumbnail'], $placeholderImage)) ?>" alt="<?= e($product['name']) ?>" class="product-image" loading="lazy">
+          </div>
+          <div class="product-info source-product-info-stacked">
+            <div class="product-category"><?= e($product['category_name'] ?: 'LUMINA') ?></div>
+            <div class="product-name"><?= e($product['name']) ?></div>
+            <div class="source-price-line">
+              <div class="product-price"><?= e(format_price($product['default_price'])) ?></div>
+              <?php if (!empty($product['compare_at_price']) && (float) $product['compare_at_price'] > (float) $product['default_price']): ?>
+                <span class="source-old-price"><?= e(format_price($product['compare_at_price'])) ?></span>
+              <?php endif; ?>
+            </div>
+          </div>
+        </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<section class="collections">
+  <div class="collections-container">
+    <a href="<?= e(APP_URL) ?>/products.php?category=kinh-mat" class="collection-card">
+      <div class="collection-image" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+      <div class="collection-content">
+        <h3 class="collection-title">Kính mát</h3>
+        <span class="collection-link">Shop Collection</span>
+      </div>
+    </a>
+    <a href="<?= e(APP_URL) ?>/products.php?category=trong-kinh" class="collection-card">
+      <div class="collection-image" style="background: linear-gradient(135deg, #171717 0%, #737373 100%);"></div>
+      <div class="collection-content">
+        <h3 class="collection-title">Tròng kính</h3>
+        <span class="collection-link">Shop Collection</span>
+      </div>
+    </a>
+  </div>
+</section>
+
 <?php require_once BASE_PATH . '/app/views/partials/footer.php'; ?>

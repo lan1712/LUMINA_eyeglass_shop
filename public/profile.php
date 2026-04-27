@@ -51,6 +51,7 @@ require_once BASE_PATH . '/app/views/partials/header.php';
         </section>
 
         <div class="profile-layout">
+            
             <section class="profile-card">
                 <h2>Thông tin tài khoản</h2>
                 <div class="profile-info-list">
@@ -58,6 +59,13 @@ require_once BASE_PATH . '/app/views/partials/header.php';
                     <div class="profile-info-item"><span>Email</span><strong><?= e($user['email']) ?></strong></div>
                     <div class="profile-info-item"><span>Số điện thoại</span><strong><?= e($user['phone'] ?: 'Chưa cập nhật') ?></strong></div>
                 </div>
+                 <div class="profile-actions">
+                    <a href="<?= e(APP_URL) ?>/logout.php" class="btn-logout">
+                    <i class="fi fi-rr-sign-out-alt icon icon-sm"></i>
+                    Đăng xuất
+                </a>
+            </div>
+
             </section>
 
             <section class="profile-card">
@@ -82,7 +90,7 @@ require_once BASE_PATH . '/app/views/partials/header.php';
                     <p>Hiển thị 5 đơn mới nhất của tài khoản hiện tại.</p>
                 </div>
             </div>
-
+            
             <?php if (!$recentOrders): ?>
                 <div class="empty-state">
                     <p>Bạn chưa có đơn hàng nào.</p>
