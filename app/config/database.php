@@ -31,7 +31,14 @@ final class Database
 
         try {
             self::$connection = new PDO($dsn, $username, $password, $options);
+
+            // Đồng bộ charset/collation với MySQL 8.
             self::$connection->exec("SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci");
+
+            // Đồng bộ giờ MySQL theo Việt Nam. Các lệnh SQL dùng NOW(), CURRENT_TIMESTAMP
+            // sẽ lấy giờ theo UTC+7 thay vì UTC trong container.
+            self::$connection->exec("SET time_zone = '+07:00'");
+
             return self::$connection;
         } catch (PDOException $exception) {
             http_response_code(500);

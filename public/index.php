@@ -68,6 +68,59 @@ require_once BASE_PATH . '/app/views/partials/header.php';
   </div>
 </section>
 
+
+<section class="home-intro">
+            <div class="container">
+                <div class="intro-list">
+                  <div class="intro-list-wrapper">
+                  <div class="intro-item">
+                 <div class="icon">
+                       <img loading="lazy" src="https://hmkeyewear.com/wp-content/uploads/2023/11/support.svg" alt="">
+                       </div>
+                    <div class="content">
+                  <p>Vệ Sinh Kính Miễn Phí</p>
+                     <span>tại toàn bộ hệ thống mắt kính HMK</span>
+                       </div>
+           </div>
+                                                                                                         <div class="intro-item">
+                 <div class="icon">
+                       <img loading="lazy" src="https://hmkeyewear.com/wp-content/uploads/2023/10/cashback.svg" alt="">
+                   </div>
+                          <div class="content">
+                            <p>Giao Hàng Nhanh Chóng</p>
+                             <span>chỉ từ 2 ngày trên toàn quốc</span>
+                           </div>
+                     </div>
+                               </div>
+                              <div class="intro-item">
+                                    <div class="icon">
+                                        <img loading="lazy" src="https://hmkeyewear.com/wp-content/uploads/2023/10/renew.svg" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <p>Thu Cũ Đổi Mới</p>
+                                        <span>trợ giá lên đến 600.000đ</span>
+                                    </div>
+                                </div>
+                                                                                                                            <div class="intro-item">
+                                    <div class="icon">
+                                        <img loading="lazy" src="https://hmkeyewear.com/wp-content/uploads/2023/10/eye-measurement.svg" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <p>Hỗ Trợ Đo Mắt</p>
+                                        <span>tại toàn bộ hệ thống mắt kính HMK</span>
+                                    </div>
+                                </div>
+                                                    </div>
+                                                                                    </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
 <section class="category-cards-section">
   <div class="catalog-container">
     <h2 class="section-heading">Khám phá theo danh mục</h2>
