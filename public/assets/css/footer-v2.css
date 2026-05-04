@@ -1,0 +1,378 @@
+/* =========================================================
+   LUMINA Footer V2
+   Footer mới dùng chung cho storefront.
+   ========================================================= */
+
+:root {
+    --lf2-navy: #1B263B;
+    --lf2-navy-2: #243754;
+    --lf2-gold: #f5b700;
+    --lf2-gold-2: #ffd45a;
+    --lf2-white: #ffffff;
+    --lf2-muted: rgba(255, 255, 255, .72);
+    --lf2-line: rgba(255, 255, 255, .13);
+}
+
+.lumina-footer-v2,
+.lumina-footer-v2 * {
+    box-sizing: border-box;
+}
+
+.lumina-footer-v2 {
+    width: 100%;
+    margin-top: 0;
+    background:
+        radial-gradient(circle at 88% 0%, rgba(245, 183, 0, .16), transparent 34%),
+        linear-gradient(180deg, var(--lf2-navy-2) 0%, var(--lf2-navy) 54%, #111827 100%);
+    color: var(--lf2-white);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+.lumina-footer-v2 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.lumina-footer-v2__cta {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 64px 0 34px;
+}
+
+.lumina-footer-v2__cta-inner {
+    min-height: 240px;
+    padding: 38px;
+    border: 1px solid var(--lf2-line);
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at 82% 20%, rgba(245, 183, 0, .2), transparent 32%),
+        rgba(255, 255, 255, .06);
+    box-shadow: 0 26px 70px rgba(0, 0, 0, .2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    backdrop-filter: blur(10px);
+}
+
+.lumina-footer-v2__eyebrow {
+    display: inline-flex;
+    color: var(--lf2-gold);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.lumina-footer-v2__cta h2 {
+    max-width: 650px;
+    margin: 10px 0 12px;
+    color: #fff;
+    font-size: clamp(30px, 4vw, 56px);
+    line-height: 1;
+    letter-spacing: -.045em;
+    font-weight: 900;
+}
+
+.lumina-footer-v2__cta p {
+    max-width: 640px;
+    margin: 0;
+    color: var(--lf2-muted);
+    line-height: 1.75;
+}
+
+.lumina-footer-v2__cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.lumina-footer-v2__btn {
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+    transition: transform .2s ease, background .2s ease, color .2s ease;
+    white-space: nowrap;
+}
+
+.lumina-footer-v2__btn:hover {
+    transform: translateY(-2px);
+}
+
+.lumina-footer-v2__btn--light {
+    background: #ecc412;
+    color: var(--lf2-navy);
+}
+
+.lumina-footer-v2__btn--outline {
+    border: 1px solid var(--lf2-line);
+    color: #fff;
+    background: transparent;
+}
+
+.lumina-footer-v2__btn--outline:hover {
+    background: rgba(255, 255, 255, .08);
+}
+
+.lumina-footer-v2__main {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 42px 0 44px;
+    border-top: 1px solid var(--lf2-line);
+    display: grid;
+    grid-template-columns: minmax(260px, .75fr) minmax(0, 1.55fr);
+    gap: 54px;
+}
+
+.lumina-footer-v2__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -.02em;
+}
+
+.lumina-footer-v2__logo span {
+    color: var(--lf2-gold);
+    font-size: 24px;
+    display: inline-flex;
+}
+
+.lumina-footer-v2__brand p {
+    max-width: 340px;
+    margin: 18px 0 24px;
+    color: var(--lf2-muted);
+    line-height: 1.75;
+}
+
+.lumina-footer-v2__socials {
+    display: flex;
+    gap: 10px;
+}
+
+.lumina-footer-v2__socials a {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid var(--lf2-line);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.lumina-footer-v2__socials a:hover {
+    background: var(--lf2-gold);
+    color: var(--lf2-navy);
+    transform: translateY(-2px);
+}
+
+.lumina-footer-v2__links {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 30px;
+}
+
+.lumina-footer-v2__column,
+.lumina-footer-v2__newsletter {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+}
+
+.lumina-footer-v2__column h3,
+.lumina-footer-v2__newsletter h3 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.lumina-footer-v2__column a {
+    color: var(--lf2-muted);
+    font-size: 14px;
+    line-height: 1.5;
+    transition: color .18s ease, transform .18s ease;
+}
+
+.lumina-footer-v2__column a:hover {
+    color: var(--lf2-gold);
+    transform: translateX(3px);
+}
+
+.lumina-footer-v2__newsletter p {
+    margin: 0 0 4px;
+    color: var(--lf2-muted);
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.lumina-footer-v2__form {
+    min-height: 46px;
+    padding: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid var(--lf2-line);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lumina-footer-v2__form input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    padding: 0 12px;
+    background: transparent;
+    color: #fff;
+    font-size: 14px;
+}
+
+.lumina-footer-v2__form input::placeholder {
+    color: rgba(255, 255, 255, .48);
+}
+
+.lumina-footer-v2__form button {
+    height: 36px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--lf2-gold);
+    color: var(--lf2-navy);
+    font-size: 13px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background .18s ease;
+}
+
+.lumina-footer-v2__form button:hover {
+    background: var(--lf2-gold-2);
+}
+
+.lumina-footer-v2__contact {
+    margin-top: 10px;
+    display: grid;
+    gap: 9px;
+}
+
+.lumina-footer-v2__contact span {
+    color: var(--lf2-muted);
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lumina-footer-v2__contact i {
+    color: var(--lf2-gold);
+}
+
+.lumina-footer-v2__bottom {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 22px 0 28px;
+    border-top: 1px solid var(--lf2-line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    color: rgba(255, 255, 255, .58);
+    font-size: 13px;
+}
+
+.lumina-footer-v2__bottom p {
+    margin: 0;
+}
+
+.lumina-footer-v2__bottom div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.lumina-footer-v2__bottom a {
+    color: rgba(255, 255, 255, .58);
+    transition: color .18s ease;
+}
+
+.lumina-footer-v2__bottom a:hover {
+    color: var(--lf2-gold);
+}
+
+@media (max-width: 1080px) {
+    .lumina-footer-v2__cta-inner,
+    .lumina-footer-v2__main {
+        grid-template-columns: 1fr;
+    }
+
+    .lumina-footer-v2__cta-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lumina-footer-v2__cta-actions {
+        justify-content: flex-start;
+    }
+
+    .lumina-footer-v2__links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 680px) {
+    .lumina-footer-v2__cta,
+    .lumina-footer-v2__main,
+    .lumina-footer-v2__bottom {
+        width: min(100% - 28px, 1200px);
+    }
+
+    .lumina-footer-v2__cta {
+        padding-top: 42px;
+    }
+
+    .lumina-footer-v2__cta-inner {
+        padding: 26px;
+        border-radius: 26px;
+    }
+
+    .lumina-footer-v2__links {
+        grid-template-columns: 1fr;
+    }
+
+    .lumina-footer-v2__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lumina-footer-v2__btn,
+    .lumina-footer-v2__cta-actions {
+        width: 100%;
+    }
+
+    .lumina-footer-v2__form {
+        border-radius: 18px;
+        align-items: stretch;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .lumina-footer-v2__form input {
+        min-height: 38px;
+    }
+
+    .lumina-footer-v2__form button {
+        width: 100%;
+    }
+}

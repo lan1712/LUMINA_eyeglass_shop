@@ -1,133 +1,226 @@
 <?php
-require_once BASE_PATH . '/app/helpers/functions.php';
-$user = auth_user();
-$dbForNav = null;
+/**
+ * LUMINA global storefront header.
+ * Header trắng theo design mới, dùng chung cho toàn bộ trang public.
+ *
+ * File này thay thế hoàn toàn header cũ. Các trang public chỉ cần:
+ * require_once BASE_PATH . '/app/views/partials/header.php';
+ */
+
 $navParents = [];
 $navChildrenByParent = [];
+
 try {
-    $dbForNav = Database::connect();
-    $stmt = $dbForNav->query("SELECT id, parent_id, name, slug FROM categories WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
-    $allNavCategories = $stmt->fetchAll();
-    foreach ($allNavCategories as $cat) {
-        if ($cat['parent_id'] === null) {
+    $db = Database::connect();
+
+    $stmt = $db->query("
+        SELECT id, parent_id, name, slug
+        FROM categories
+        WHERE is_active = 1
+        ORDER BY sort_order ASC, id ASC
+    ");
+
+    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $cat) {
+        $parentId = $cat['parent_id'] ?? null;
+
+        if ($parentId === null || $parentId === '' || (int) $parentId === 0) {
             $navParents[(int) $cat['id']] = $cat;
-        } else {
-            $navChildrenByParent[(int) $cat['parent_id']][] = $cat;
+            continue;
         }
+
+        $navChildrenByParent[(int) $parentId][] = $cat;
     }
 } catch (Throwable $exception) {
     $navParents = [];
     $navChildrenByParent = [];
 }
 
-$preferredSlugs = ['gong-kinh', 'kinh-mat', 'trong-kinh'];
-$menuParents = [];
-foreach ($preferredSlugs as $slug) {
-    foreach ($navParents as $parent) {
-        if (($parent['slug'] ?? '') === $slug) {
-            $menuParents[] = $parent;
-            break;
+if (!function_exists('lumina_header_parent_by_slug')) {
+    function lumina_header_parent_by_slug(array $parents, string $slug): ?array
+    {
+        foreach ($parents as $parent) {
+            if (($parent['slug'] ?? '') === $slug) {
+                return $parent;
+            }
         }
+
+        return null;
     }
 }
 
-function lumina_nav_category_url(array $category): string
-{
-    return APP_URL . '/products.php?category=' . urlencode((string) ($category['slug'] ?? $category['id']));
+if (!function_exists('lumina_header_category_url')) {
+    function lumina_header_category_url(string $slug): string
+    {
+        return APP_URL . '/products.php?category=' . urlencode($slug);
+    }
+}
+
+if (!function_exists('lumina_header_child_url')) {
+    function lumina_header_child_url(string $parentSlug, array $child): string
+    {
+        return APP_URL
+            . '/products.php?category=' . urlencode($parentSlug)
+            . '&subcat[]=' . urlencode((string) ($child['slug'] ?? $child['id']));
+    }
+}
+
+if (!function_exists('lumina_header_is_active')) {
+    function lumina_header_is_active(string $slug): bool
+    {
+        $current = $_GET['category'] ?? '';
+        return $current === $slug;
+    }
+}
+
+$fallbackMenus = [
+    'gong-kinh' => [
+        'label' => 'Gọng kính',
+        'children' => [
+            ['name' => 'Gọng kính kim loại', 'slug' => 'gong-kinh-kim-loai'],
+            ['name' => 'Gọng kính oval', 'slug' => 'gong-kinh-oval'],
+            ['name' => 'Gọng kính mắt mèo', 'slug' => 'gong-kinh-mat-meo'],
+            ['name' => 'Gọng kính nhựa', 'slug' => 'gong-kinh-nhua'],
+            ['name' => 'Gọng kính nửa viền', 'slug' => 'gong-kinh-nua-vien'],
+            ['name' => 'Gọng nhựa phối kim loại', 'slug' => 'gong-nhua-phoi-kim-loai'],
+            ['name' => 'Kính đổi màu', 'slug' => 'kinh-doi-mau'],
+        ],
+    ],
+    'kinh-mat' => [
+        'label' => 'Kính mát',
+        'children' => [
+            ['name' => 'Kính mắt nam', 'slug' => 'kinh-mat-nam'],
+            ['name' => 'Kính mắt nữ', 'slug' => 'kinh-mat-nu'],
+            ['name' => 'Kính mắt em bé', 'slug' => 'kinh-mat-em-be'],
+        ],
+    ],
+    'trong-kinh' => [
+        'label' => 'Tròng kính',
+        'children' => [
+            ['name' => 'Tròng siêu mỏng', 'slug' => 'trong-sieu-mong'],
+            ['name' => 'Tròng chống ánh sáng xanh', 'slug' => 'trong-chong-anh-sang-xanh'],
+            ['name' => 'Tròng đổi màu', 'slug' => 'trong-doi-mau'],
+            ['name' => 'Tròng cận phổ thông', 'slug' => 'trong-can-pho-thong'],
+            ['name' => 'Tròng chống tia UV', 'slug' => 'trong-chong-tia-uv'],
+            ['name' => 'Tròng kính đa tròng', 'slug' => 'trong-kinh-da-trong'],
+            ['name' => 'Tròng râm cận', 'slug' => 'trong-ram-can'],
+            ['name' => 'Tròng Kính Phát Sáng', 'slug' => 'trong-kinh-phat-sang'],
+        ],
+    ],
+];
+
+$menus = [];
+
+foreach (['gong-kinh', 'kinh-mat', 'trong-kinh'] as $slug) {
+    $parent = lumina_header_parent_by_slug($navParents, $slug);
+    $fallback = $fallbackMenus[$slug];
+
+    $children = [];
+
+    if ($parent && isset($navChildrenByParent[(int) $parent['id']])) {
+        $children = $navChildrenByParent[(int) $parent['id']];
+    }
+
+    if (!$parent) {
+        $parent = [
+            'id' => 0,
+            'name' => $fallback['label'],
+            'slug' => $slug,
+        ];
+    }
+
+    // Chuẩn hóa tên menu đúng như design mới.
+    $parent['name'] = $fallback['label'];
+
+    if (empty($children)) {
+        $children = $fallback['children'];
+    }
+
+    $menus[] = [
+        'slug' => $slug,
+        'parent' => $parent,
+        'children' => $children,
+    ];
+}
+
+$cartCount = 0;
+
+if (function_exists('cart_count')) {
+    $cartCount = (int) cart_count();
+} elseif (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        $cartCount += (int) ($item['quantity'] ?? $item ?? 0);
+    }
+}
+
+$isLoggedIn = function_exists('is_logged_in') ? is_logged_in() : !empty($_SESSION['user']);
+$isAdminUser = function_exists('is_admin') ? is_admin() : false;
+$accountHref = $isLoggedIn ? APP_URL . '/profile.php' : APP_URL . '/login.php';
+if ($isAdminUser) {
+    $accountHref = APP_URL . '/admin/';
 }
 ?>
-<nav class="nav">
-  <div class="nav-container">
-    <div class="nav-content">
-      <a href="<?= e(APP_URL) ?>/" class="nav-logo">LUMINA</a>
 
-      <div class="nav-desktop-menu" id="desktop-menu">
-        <div class="nav-menu-item">
-          <a href="<?= e(APP_URL) ?>/" class="nav-menu-link <?= is_active_nav('/') || is_active_nav('/index.php') ? 'active' : '' ?>">Trang chủ</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="<?= e(APP_URL) ?>/products.php" class="nav-menu-link <?= is_active_nav('/products.php') ? 'active' : '' ?>">Bộ sưu tập</a>
-        </div>
+<header class="lumina-global-header">
+    <div class="lumina-global-header__inner">
+        <a class="lumina-global-header__brand" href="<?= e(APP_URL) ?>/" aria-label="Trang chủ LUMINA">
+            <span class="lumina-global-header__brand-icon">
+                <i class="fi fi-rr-glasses"></i>
+            </span>
+            <span>LUMINA</span>
+        </a>
 
-        <?php foreach ($menuParents as $parent): ?>
-          <?php $children = $navChildrenByParent[(int) $parent['id']] ?? []; ?>
-          <div class="nav-menu-item">
-            <a href="<?= e(lumina_nav_category_url($parent)) ?>" class="nav-menu-link">
-              <span><?= e($parent['name']) ?></span>
-              <?php if ($children): ?>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"></path></svg>
-              <?php endif; ?>
-            </a>
-            <?php if ($children): ?>
-              <div class="dropdown">
-                <?php foreach ($children as $child): ?>
-                  <div class="dropdown-item">
-                    <a href="<?= e(lumina_nav_category_url($child)) ?>" class="dropdown-link">
-                      <span><?= e($child['name']) ?></span>
+        <nav class="lumina-global-header__nav" aria-label="Danh mục chính">
+            <?php foreach ($menus as $menu): ?>
+                <?php
+                    $slug = $menu['slug'];
+                    $parent = $menu['parent'];
+                    $isActive = lumina_header_is_active($slug);
+                ?>
+                <div class="lumina-global-header__item">
+                    <a
+                        class="lumina-global-header__link <?= $isActive ? 'is-active' : '' ?>"
+                        href="<?= e(lumina_header_category_url($slug)) ?>"
+                    >
+                        <?= e($parent['name']) ?>
+                        <i class="fi fi-rr-angle-small-down"></i>
                     </a>
-                  </div>
-                <?php endforeach; ?>
-              </div>
-            <?php endif; ?>
-          </div>
-        <?php endforeach; ?>
 
-        <div class="nav-menu-item"><a href="#blog" class="nav-menu-link">Blog</a></div>
-        <div class="nav-menu-item"><a href="#contact" class="nav-menu-link">Liên hệ</a></div>
-        <?php if ($user && is_admin_user()): ?>
-          <div class="nav-menu-item"><a href="<?= e(APP_URL) ?>/admin/" class="nav-menu-link">Admin</a></div>
-        <?php endif; ?>
-      </div>
+                    <div class="lumina-global-header__dropdown">
+                        <?php foreach ($menu['children'] as $child): ?>
+                            <a href="<?= e(lumina_header_child_url($slug, $child)) ?>">
+                                <?= e($child['name']) ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
 
-      <div class="nav-icons">
-        <a class="nav-icon-btn nav-icon-link nav-icon-desktop" href="<?= e(APP_URL) ?>/products.php" aria-label="Search">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-        </a>
-        <a class="nav-icon-btn nav-icon-link nav-icon-desktop" href="<?= e($user ? APP_URL . '/profile.php' : APP_URL . '/login.php') ?>" aria-label="Account">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </a>
-        <a class="nav-icon-btn nav-icon-link" href="<?= e(APP_URL) ?>/cart.php" aria-label="Shopping Cart">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          <?php if (cart_count() > 0): ?><span class="cart-badge-source"><?= (int) cart_count() ?></span><?php endif; ?>
-        </a>
-        <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
-        </button>
-      </div>
+            <a class="lumina-global-header__link no-dropdown" href="<?= e(APP_URL) ?>/collections.php">Bộ sưu tập</a>
+            <a class="lumina-global-header__link no-dropdown" href="<?= e(APP_URL) ?>/about.php">Về chúng tôi</a>
+        </nav>
+
+        <div class="lumina-global-header__actions">
+            <form class="lumina-global-header__search" action="<?= e(APP_URL) ?>/products.php" method="get">
+                <i class="fi fi-rr-search"></i>
+                <input
+                    type="search"
+                    name="q"
+                    value="<?= e($_GET['q'] ?? '') ?>"
+                    placeholder="Tìm kiếm..."
+                    aria-label="Tìm kiếm sản phẩm"
+                >
+            </form>
+
+            <a class="lumina-global-header__icon" href="<?= e(APP_URL) ?>/cart.php" aria-label="Giỏ hàng">
+                <i class="fi fi-rr-shopping-cart"></i>
+                <?php if ($cartCount > 0): ?>
+                    <span><?= e((string) $cartCount) ?></span>
+                <?php endif; ?>
+            </a>
+
+            <a class="lumina-global-header__icon" href="<?= e($accountHref) ?>" aria-label="Tài khoản">
+                <i class="fi fi-rr-user"></i>
+            </a>
+        </div>
     </div>
-
-    <div class="mobile-menu" id="mobile-menu">
-      <div id="mobile-menu-items">
-        <div class="mobile-menu-item"><a href="<?= e(APP_URL) ?>/" class="mobile-menu-link">Trang chủ</a></div>
-        <div class="mobile-menu-item"><a href="<?= e(APP_URL) ?>/products.php" class="mobile-menu-link">Bộ sưu tập</a></div>
-        <?php foreach ($menuParents as $idx => $parent): ?>
-          <?php $children = $navChildrenByParent[(int) $parent['id']] ?? []; $menuId = 'mobile-cat-' . (int) $parent['id']; ?>
-          <div class="mobile-menu-item">
-            <?php if ($children): ?>
-              <button class="mobile-menu-link" data-toggle="<?= e($menuId) ?>">
-                <span><?= e($parent['name']) ?></span>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 10 5 14 9"></polyline></svg>
-              </button>
-              <div class="mobile-submenu" id="<?= e($menuId) ?>">
-                <a href="<?= e(lumina_nav_category_url($parent)) ?>" class="mobile-submenu-link">Tất cả <?= e($parent['name']) ?></a>
-                <?php foreach ($children as $child): ?>
-                  <a href="<?= e(lumina_nav_category_url($child)) ?>" class="mobile-submenu-link"><?= e($child['name']) ?></a>
-                <?php endforeach; ?>
-              </div>
-            <?php else: ?>
-              <a href="<?= e(lumina_nav_category_url($parent)) ?>" class="mobile-menu-link"><?= e($parent['name']) ?></a>
-            <?php endif; ?>
-          </div>
-        <?php endforeach; ?>
-        <div class="mobile-menu-item"><a href="<?= e(APP_URL) ?>/orders.php" class="mobile-menu-link">Đơn hàng</a></div>
-        <?php if ($user): ?>
-          <div class="mobile-menu-item"><a href="<?= e(APP_URL) ?>/profile.php" class="mobile-menu-link">Tài khoản</a></div>
-          <div class="mobile-menu-item"><a href="<?= e(APP_URL) ?>/logout.php" class="mobile-menu-link">Đăng xuất</a></div>
-        <?php else: ?>
-          <div class="mobile-menu-item"><a href="<?= e(APP_URL) ?>/login.php" class="mobile-menu-link">Đăng nhập</a></div>
-          <div class="mobile-menu-item"><a href="<?= e(APP_URL) ?>/register.php" class="mobile-menu-link">Đăng ký</a></div>
-        <?php endif; ?>
-      </div>
-    </div>
-  </div>
-</nav>
+</header>

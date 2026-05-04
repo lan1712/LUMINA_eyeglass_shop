@@ -255,6 +255,11 @@ if (!function_exists('auth_user')) {
     }
 }
 
+
+
+
+
+
 if (!function_exists('is_logged_in')) {
     function is_logged_in(): bool
     {
