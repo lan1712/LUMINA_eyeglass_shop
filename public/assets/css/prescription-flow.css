@@ -1,0 +1,1564 @@
+
+/* =========================================================
+   LUMINA Prescription Flow V2 - Integrated with existing layout
+   This file only styles flow-specific pieces.
+   Product list/card/filter uses existing atelier-products.css/style.css.
+   Product detail uses existing product-detail classes.
+   Checkout/review/payment uses existing checkout/card classes.
+   ========================================================= */
+
+.pf-integrated-page {
+    background: #F8FAFC;
+}
+
+.pf-integrated-page .container,
+.pf-integrated-page .atelier-main {
+    position: relative;
+}
+
+.pf-flow-wrap {
+    margin: 0 0 32px;
+    padding: 22px;
+    border: 1px solid #E5E7EB;
+    border-radius: 26px;
+    background: #fff;
+    box-shadow: 0 18px 46px rgba(15, 23, 42, .06);
+}
+
+.pf-flow-top {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.pf-flow-back {
+    min-height: 42px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid #E5E7EB;
+    background: #fff;
+    color: #1B263B;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.pf-flow-back:hover {
+    color: #0F8B67;
+    border-color: rgba(15, 139, 103, .28);
+}
+
+.pf-flow-title {
+    text-align: right;
+}
+
+.pf-flow-title span {
+    display: block;
+    color: #0F8B67;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.pf-flow-title strong {
+    color: #1B263B;
+    font-size: 16px;
+}
+
+.pf-stepper {
+    height: auto;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 18px;
+}
+
+.pf-step {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    color: #94A3B8;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.pf-step::before {
+    content: "";
+    position: absolute;
+    top: 16px;
+    left: -50%;
+    width: 100%;
+    height: 2px;
+    background: #EEF2F7;
+}
+
+.pf-step:first-child::before {
+    display: none;
+}
+
+.pf-step span {
+    width: 34px;
+    height: 34px;
+    position: relative;
+    z-index: 1;
+    border-radius: 999px;
+    background: #EEF2F7;
+    color: #94A3B8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+}
+
+.pf-step.is-active span,
+.pf-step.is-done span {
+    background: #0F8B67;
+    color: #fff;
+}
+
+.pf-step.is-active,
+.pf-step.is-done {
+    color: #0F8B67;
+}
+
+.pf-step.is-active::before,
+.pf-step.is-done::before {
+    background: #0F8B67;
+}
+
+/* Prescription start reuses atelier product listing */
+.pf-prescription-head {
+    margin-top: 8px;
+}
+
+.pf-select-frame-card .pf-inline-cta {
+    margin-top: 14px;
+    min-height: 42px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: #000000;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: fit-content;
+    font-weight: 900;
+    font-size: 13px;
+}
+
+.pf-select-frame-card:hover .pf-inline-cta {
+    background: #000000;
+}
+
+.pf-prescription-badge {
+    background: #ECFDF3 !important;
+    color: #000000 !important;
+}
+
+/* Detail page uses product-detail layout, these are just spacing helpers */
+.pf-detail-layout {
+    margin-top: 26px;
+}
+
+.pf-detail-summary-row {
+    display: none;
+}
+
+/* Summary card reused inside checkout-like pages */
+.pf-summary {
+    padding: 24px;
+    border-radius: 28px;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 18px 44px rgba(15, 23, 42, .06);
+    position: sticky;
+    top: 100px;
+}
+
+.pf-summary-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.pf-summary-head span {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    background: #ECFDF3;
+    color: #0F8B67;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pf-summary-head h3 {
+    margin: 0;
+    color: #1B263B;
+    font-size: 21px;
+}
+
+.pf-summary-section {
+    padding: 18px 0;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.pf-summary-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.pf-summary-title strong {
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.pf-summary-title a {
+    color: #0F8B67;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.pf-mini-card {
+    padding: 12px;
+    border-radius: 16px;
+    background: #F8FAFC;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.pf-mini-card img {
+    width: 56px;
+    height: 50px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 12px;
+}
+
+.pf-mini-card span,
+.pf-mini-card small {
+    display: block;
+    color: #64748B;
+    font-size: 12px;
+}
+
+.pf-mini-card strong {
+    display: block;
+    font-size: 14px;
+    line-height: 1.25;
+}
+
+.pf-mini-card b {
+    font-size: 13px;
+}
+
+.pf-empty-line {
+    min-height: 46px;
+    padding: 0 14px;
+    border-radius: 14px;
+    border: 1px dashed #CBD5E1;
+    color: #94A3B8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.pf-empty-line.is-locked {
+    background: #F8FAFC;
+}
+
+.pf-mini-info {
+    padding: 12px;
+    border-radius: 16px;
+    background: #F8FAFC;
+    display: grid;
+    gap: 4px;
+}
+
+.pf-mini-info strong {
+    font-size: 14px;
+}
+
+.pf-mini-info span {
+    color: #64748B;
+    font-size: 12px;
+}
+
+.pf-total-row {
+    padding: 20px 0 8px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.pf-total-row span {
+    color: #64748B;
+}
+
+.pf-total-row strong {
+    color: #0F8B67;
+    font-size: 24px;
+}
+
+.pf-summary-btn {
+    width: 100%;
+    min-height: 54px;
+    border: 0;
+    border-radius: 14px;
+    background: #0F8B67;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-weight: 900;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pf-summary-btn:hover {
+    background: #0C7557;
+}
+
+.pf-summary-btn.is-disabled,
+.pf-summary-btn:disabled {
+    background: #E5E7EB;
+    color: #94A3B8;
+    cursor: not-allowed;
+}
+
+.pf-safe {
+    display: block;
+    margin-top: 14px;
+    color: #94A3B8;
+    text-align: center;
+}
+
+/* Wizard-specific UI, styled to look like existing card system */
+.pf-page {
+    background: #F8FAFC;
+    color: #111827;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+.pf-main {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 34px 0 64px;
+}
+
+.pf-grid,
+.pf-payment-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 28px;
+    align-items: start;
+}
+
+.pf-title {
+    margin: 0 0 26px;
+}
+
+.pf-title h1 {
+    margin: 0 0 8px;
+    color: #1B263B;
+    font-size: clamp(30px, 3vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -.04em;
+    font-weight: 900;
+}
+
+.pf-title p {
+    margin: 0;
+    color: #64748B;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.pf-panel,
+.pf-option-card,
+.pf-lens-card,
+.pf-index-card,
+.pf-coating-row,
+.pf-review-card,
+.pf-payment-option {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, .05);
+}
+
+.pf-panel {
+    padding: 28px;
+    border-radius: 28px;
+}
+
+.pf-panel + .pf-panel {
+    margin-top: 24px;
+}
+
+.pf-option-grid,
+.pf-lens-grid,
+.pf-index-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.pf-option-card {
+    min-height: 190px;
+    padding: 26px;
+    border-radius: 22px;
+    color: #111827;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    cursor: pointer;
+}
+
+button.pf-option-card {
+    text-align: left;
+    font: inherit;
+}
+
+.pf-option-card:hover,
+.pf-option-card.is-selected,
+.pf-lens-card:hover,
+.pf-lens-card.is-selected {
+    border-color: #0F8B67;
+    background: #ECFDF3;
+    transform: translateY(-2px);
+}
+
+.pf-option-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    background: #F8FAFC;
+    color: #0F8B67;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.pf-option-card h3,
+.pf-lens-card h3 {
+    margin: 18px 0 8px;
+    font-size: 21px;
+}
+
+.pf-option-card p,
+.pf-lens-card p,
+.pf-payment-option p,
+.pf-coating-row p {
+    margin: 0;
+    color: #64748B;
+    line-height: 1.6;
+}
+
+.pf-info-note,
+.pf-alert {
+    margin-top: 24px;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid #BBF7D0;
+    background: #F0FDF4;
+    color: #166534;
+    line-height: 1.6;
+    font-weight: 700;
+}
+
+.pf-form-grid {
+    display: grid;
+    gap: 18px;
+}
+
+.pf-form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.pf-field {
+    display: grid;
+    gap: 8px;
+}
+
+.pf-field label,
+.pf-field > span {
+    font-weight: 900;
+    color: #111827;
+}
+
+.pf-field input,
+.pf-field select,
+.pf-field textarea {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    background: #F8FAFC;
+    padding: 0 14px;
+    color: #111827;
+    outline: 0;
+}
+
+.pf-field textarea {
+    min-height: 110px;
+    padding: 14px;
+    resize: vertical;
+}
+
+.pf-upload-box {
+    min-height: 270px;
+    border: 2px dashed #86EFAC;
+    border-radius: 22px;
+    background: #FAFFFC;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 30px;
+    cursor: pointer;
+}
+
+.pf-upload-box i {
+    width: 58px;
+    height: 58px;
+    border-radius: 999px;
+    background: #ECFDF3;
+    color: #0F8B67;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.pf-upload-box input {
+    display: none;
+}
+
+.pf-upload-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.pf-small-btn {
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    background: #fff;
+    color: #111827;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 900;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.pf-small-btn.is-primary {
+    background: #0F8B67;
+    color: #fff;
+    border-color: #0F8B67;
+}
+
+.pf-lens-card {
+    padding: 24px;
+    min-height: 245px;
+    color: #111827;
+    text-decoration: none;
+    display: grid;
+    gap: 18px;
+    border-radius: 20px;
+    transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.pf-lens-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.pf-lens-top span:first-child {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: #F8FAFC;
+    color: #0F8B67;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.pf-tag {
+    min-height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #DCFCE7;
+    color: #15803D;
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.pf-index-card,
+.pf-coating-row,
+.pf-payment-option {
+    position: relative;
+    padding: 18px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.pf-index-card input,
+.pf-coating-row input,
+.pf-payment-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.pf-index-card:has(input:checked),
+.pf-coating-row:has(input:checked),
+.pf-payment-option:has(input:checked) {
+    border-color: #0F8B67;
+    background: #ECFDF3;
+}
+
+.pf-index-card strong {
+    display: block;
+    font-size: 19px;
+}
+
+.pf-index-card span {
+    color: #0F8B67;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.pf-index-card p {
+    color: #64748B;
+    line-height: 1.5;
+}
+
+.pf-price-right {
+    display: block;
+    text-align: right;
+    font-weight: 900;
+}
+
+.pf-coating-list,
+.pf-payment-list {
+    display: grid;
+    gap: 12px;
+}
+
+.pf-coating-row,
+.pf-payment-option {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+}
+
+.pf-review-card {
+    padding: 24px;
+    border-radius: 20px;
+}
+
+.pf-review-card + .pf-review-card {
+    margin-top: 20px;
+}
+
+.pf-review-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.pf-review-head h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.pf-review-head a {
+    color: #0F8B67;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.pf-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pf-table th,
+.pf-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #F1F5F9;
+    text-align: left;
+}
+
+.pf-table th {
+    color: #64748B;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.pf-error {
+    padding: 16px;
+    border-radius: 16px;
+    background: #FEF3F2;
+    color: #B42318;
+    border: 1px solid #FECDCA;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.pf-success {
+    width: min(760px, calc(100% - 48px));
+    margin: 70px auto;
+    padding: 44px;
+    border-radius: 30px;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 24px 64px rgba(15, 23, 42, .08);
+    text-align: center;
+}
+
+.pf-success-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 20px;
+    border-radius: 999px;
+    background: #ECFDF3;
+    color: #0F8B67;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+}
+
+.pf-success h1 {
+    margin: 0 0 10px;
+    color: #111827;
+    font-size: 40px;
+    line-height: 1.05;
+}
+
+.pf-success-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+@media (max-width: 1180px) {
+    .pf-grid,
+    .pf-payment-layout,
+    .product-detail-layout.pf-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .pf-summary {
+        position: static;
+    }
+}
+
+@media (max-width: 760px) {
+    .pf-flow-top,
+    .pf-review-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pf-flow-title {
+        text-align: left;
+    }
+
+    .pf-stepper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pf-main {
+        width: min(100% - 28px, 1180px);
+    }
+
+    .pf-option-grid,
+    .pf-lens-grid,
+    .pf-index-grid,
+    .pf-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .pf-success-actions {
+        flex-direction: column;
+    }
+}
+
+
+/* =========================================================
+   FIX 2.0.2 - Prescription Start UI
+   Reason: the page reused atelier-* classes, but some projects do not
+   have those class rules loaded on prescription-start.php.
+   This block is self-contained and scoped to .pf-integrated-page.
+   ========================================================= */
+
+.pf-integrated-page,
+.pf-integrated-page * {
+    box-sizing: border-box;
+}
+
+.pf-integrated-page.atelier-page {
+    background: #F7F8FA;
+    color: #172033;
+    min-height: 100vh;
+}
+
+.pf-integrated-page .atelier-main {
+    width: min(1280px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 28px 0 64px;
+}
+
+.pf-integrated-page .pf-flow-wrap {
+    margin: 0 0 42px;
+    padding: 22px 26px;
+    border-radius: 26px;
+    background: #fff;
+    border: 1px solid #E7EBF0;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .055);
+}
+
+.pf-integrated-page .pf-flow-top {
+    margin-bottom: 24px;
+}
+
+.pf-integrated-page .pf-flow-back {
+    color: #172033;
+    background: #fff;
+    border-color: #E5EAF0;
+}
+
+.pf-integrated-page .pf-flow-back:hover {
+    color: #0F8B67;
+}
+
+.pf-integrated-page .pf-stepper {
+    padding: 0 88px;
+    gap: 0;
+}
+
+.pf-integrated-page .pf-step span {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+}
+
+.pf-integrated-page .pf-step strong {
+    font-size: 11px;
+    letter-spacing: .06em;
+}
+
+.pf-integrated-page .atelier-page-head {
+    margin: 0 0 34px;
+    max-width: 740px;
+}
+
+.pf-integrated-page .atelier-kicker {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 14px;
+    color: #0F8B67;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.pf-integrated-page .atelier-title {
+    margin: 0 0 14px;
+    color: #111827;
+    font-size: clamp(38px, 4vw, 62px);
+    line-height: .98;
+    letter-spacing: -.055em;
+    font-weight: 950;
+}
+
+.pf-integrated-page .atelier-description {
+    margin: 0;
+    color: #64748B;
+    font-size: 16px;
+    line-height: 1.72;
+}
+
+.pf-integrated-page .atelier-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 34px;
+    align-items: start;
+}
+
+.pf-integrated-page .atelier-sidebar {
+    position: sticky;
+    top: 104px;
+    align-self: start;
+}
+
+.pf-integrated-page .atelier-filter-form {
+    padding: 24px;
+    border-radius: 28px;
+    background: #fff;
+    border: 1px solid #E7EBF0;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .055);
+}
+
+.pf-integrated-page .atelier-filter-block {
+    padding: 0 0 22px;
+    margin: 0 0 22px;
+    border-bottom: 1px solid #EEF2F6;
+}
+
+.pf-integrated-page .atelier-filter-block:last-of-type {
+    margin-bottom: 18px;
+}
+
+.pf-integrated-page .atelier-filter-title {
+    margin: 0 0 14px;
+    color: #111827;
+    font-size: 14px;
+    line-height: 1.2;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 950;
+}
+
+.pf-integrated-page .atelier-check-list {
+    display: grid;
+    gap: 11px;
+}
+
+.pf-integrated-page .atelier-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.35;
+    cursor: pointer;
+}
+
+.pf-integrated-page .atelier-check input {
+    width: 16px;
+    height: 16px;
+    margin: 1px 0 0;
+    accent-color: #0F8B67;
+    flex: 0 0 auto;
+}
+
+.pf-integrated-page .atelier-check small {
+    color: #94A3B8;
+    font-weight: 800;
+}
+
+.pf-integrated-page .atelier-price-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.pf-integrated-page .atelier-price-inputs input {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #E1E7EF;
+    border-radius: 14px;
+    background: #F8FAFC;
+    padding: 0 12px;
+    color: #111827;
+    outline: none;
+}
+
+.pf-integrated-page .atelier-price-inputs input:focus {
+    border-color: #0F8B67;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(15, 139, 103, .08);
+}
+
+.pf-integrated-page .atelier-price-track {
+    position: relative;
+    height: 5px;
+    border-radius: 999px;
+    background: #D8DEE6;
+    overflow: hidden;
+    margin: 10px 0 10px;
+}
+
+.pf-integrated-page .atelier-price-track span {
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    top: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: #0F8B67;
+}
+
+.pf-integrated-page .atelier-price-labels {
+    display: flex;
+    justify-content: space-between;
+    color: #64748B;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.pf-integrated-page .atelier-filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pf-integrated-page .atelier-filter-btn,
+.pf-integrated-page .atelier-clear-btn {
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.pf-integrated-page .atelier-filter-btn {
+    border: 0;
+    background: #0F8B67;
+    color: #fff;
+    cursor: pointer;
+}
+
+.pf-integrated-page .atelier-filter-btn:hover {
+    background: #0C7557;
+    transform: translateY(-1px);
+}
+
+.pf-integrated-page .atelier-clear-btn {
+    border: 1px solid #E1E7EF;
+    background: #fff;
+    color: #475569;
+}
+
+.pf-integrated-page .atelier-content {
+    min-width: 0;
+}
+
+.pf-integrated-page .atelier-content-top {
+    min-height: 52px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.pf-integrated-page .atelier-count {
+    color: #64748B;
+    font-weight: 800;
+}
+
+.pf-integrated-page .atelier-sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #64748B;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.pf-integrated-page .atelier-sort select {
+    min-height: 42px;
+    min-width: 150px;
+    border: 1px solid #E1E7EF;
+    border-radius: 14px;
+    background: #fff;
+    padding: 0 12px;
+    color: #111827;
+    outline: none;
+}
+
+.pf-integrated-page .atelier-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 26px;
+}
+
+.pf-integrated-page .atelier-product-card {
+    overflow: hidden;
+    border-radius: 28px;
+    background: #fff;
+    border: 1px solid #E7EBF0;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .055);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.pf-integrated-page .atelier-product-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(15, 139, 103, .32);
+    box-shadow: 0 24px 58px rgba(15, 23, 42, .11);
+}
+
+.pf-integrated-page .atelier-product-card a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.pf-integrated-page .atelier-product-image {
+    position: relative;
+    height: 280px;
+    background: #F3F5F8;
+    display: grid;
+    place-items: center;
+    padding: 26px;
+    overflow: hidden;
+}
+
+.pf-integrated-page .atelier-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform .35s ease;
+}
+
+.pf-integrated-page .atelier-product-card:hover .atelier-product-image img {
+    transform: scale(1.05) rotate(-2deg);
+}
+
+.pf-integrated-page .atelier-heart {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #0F8B67;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, .11);
+}
+
+.pf-integrated-page .atelier-product-info {
+    padding: 20px;
+}
+
+.pf-integrated-page .atelier-product-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.pf-integrated-page .atelier-product-name {
+    margin: 0 0 6px;
+    color: #111827;
+    font-size: 18px;
+    line-height: 1.22;
+    font-weight: 950;
+}
+
+.pf-integrated-page .atelier-product-sub {
+    margin: 0;
+    color: #94A3B8;
+    font-size: 12px;
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 850;
+}
+
+.pf-integrated-page .atelier-product-price {
+    color: #111827;
+    text-align: right;
+    font-size: 15px;
+    line-height: 1.25;
+    font-weight: 950;
+    white-space: nowrap;
+}
+
+.pf-integrated-page .atelier-old-price {
+    display: block;
+    color: #94A3B8;
+    font-size: 12px;
+    text-decoration: line-through;
+    font-weight: 700;
+}
+
+.pf-integrated-page .atelier-color-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.pf-integrated-page .atelier-color-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 999px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #CBD5E1;
+}
+
+.pf-integrated-page .pf-inline-cta {
+    margin-top: 16px;
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: #000000;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: fit-content;
+    font-weight: 950;
+    font-size: 13px;
+}
+
+.pf-integrated-page .atelier-product-card:hover .pf-inline-cta {
+    background: #000000;
+}
+
+.pf-integrated-page .atelier-pagination {
+    margin-top: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pf-integrated-page .atelier-page-link {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #E1E7EF;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.pf-integrated-page .atelier-page-link.is-active,
+.pf-integrated-page .atelier-page-link:hover:not(.is-disabled) {
+    background: #0F8B67;
+    border-color: #0F8B67;
+    color: #fff;
+}
+
+.pf-integrated-page .atelier-page-link.is-disabled {
+    opacity: .45;
+    pointer-events: none;
+}
+
+.pf-integrated-page .atelier-empty {
+    padding: 42px;
+    border-radius: 24px;
+    background: #fff;
+    border: 1px solid #E7EBF0;
+    color: #64748B;
+    text-align: center;
+    font-weight: 800;
+}
+
+@media (max-width: 1180px) {
+    .pf-integrated-page .atelier-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .pf-integrated-page .atelier-sidebar {
+        position: static;
+    }
+
+    .pf-integrated-page .atelier-products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pf-integrated-page .pf-stepper {
+        padding: 0 28px;
+    }
+}
+
+@media (max-width: 760px) {
+    .pf-integrated-page .atelier-main {
+        width: min(100% - 28px, 1280px);
+        padding-top: 18px;
+    }
+
+    .pf-integrated-page .pf-flow-wrap {
+        padding: 18px;
+        border-radius: 22px;
+    }
+
+    .pf-integrated-page .pf-stepper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        row-gap: 18px;
+        padding: 0;
+    }
+
+    .pf-integrated-page .atelier-content-top,
+    .pf-integrated-page .atelier-product-main {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pf-integrated-page .atelier-products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pf-integrated-page .atelier-product-price {
+        text-align: left;
+    }
+}
+
+/* =========================================================
+   Price range slider - match original product filter UI
+   Keep at end so it overrides earlier simple price input styles.
+   ========================================================= */
+.pf-integrated-page .atelier-filter-toggle {
+    width: 100%;
+    margin: 0 0 18px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 950;
+    cursor: default;
+}
+
+.pf-integrated-page .atelier-filter-toggle i {
+    color: #6B7280;
+    font-size: 16px;
+}
+
+.pf-integrated-page .atelier-price-range {
+    display: grid;
+    gap: 18px;
+}
+
+.pf-integrated-page .atelier-range-slider {
+    position: relative;
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+.pf-integrated-page .atelier-slider-track,
+.pf-integrated-page .atelier-slider-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 5px;
+    transform: translateY(-50%);
+    border-radius: 999px;
+}
+
+.pf-integrated-page .atelier-slider-track {
+    background: #D9DDE2;
+}
+
+.pf-integrated-page .atelier-slider-progress {
+    left: 0;
+    right: 0;
+    background: #565B62;
+}
+
+.pf-integrated-page .atelier-range-slider input[type="range"] {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 28px;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.pf-integrated-page .atelier-range-slider input[type="range"]::-webkit-slider-runnable-track {
+    height: 5px;
+    background: transparent;
+    border: 0;
+}
+
+.pf-integrated-page .atelier-range-slider input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    margin-top: -7.5px;
+    border-radius: 999px;
+    border: 0;
+    background: #565B62;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, .18);
+    cursor: pointer;
+    pointer-events: auto;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.pf-integrated-page .atelier-range-slider input[type="range"]::-moz-range-track {
+    height: 5px;
+    background: transparent;
+    border: 0;
+}
+
+.pf-integrated-page .atelier-range-slider input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    border: 0;
+    background: #565B62;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, .18);
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.pf-integrated-page .atelier-price-inputs.atelier-price-boxes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.pf-integrated-page .atelier-price-box {
+    min-width: 0;
+    height: 56px;
+    padding: 0 14px;
+    border-radius: 14px;
+    background: #F0F0F1;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pf-integrated-page .atelier-price-box span {
+    color: #111827;
+    font-size: 18px;
+    font-weight: 900;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.pf-integrated-page .atelier-price-box input {
+    width: 100%;
+    min-height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 800;
+    outline: none;
+    appearance: textfield;
+}
+
+.pf-integrated-page .atelier-price-box input::-webkit-outer-spin-button,
+.pf-integrated-page .atelier-price-box input::-webkit-inner-spin-button {
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.pf-integrated-page .atelier-price-box:focus-within {
+    border-color: rgba(10, 36, 105, .18);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(10, 36, 105, .06);
+}
+
+.pf-integrated-page .atelier-price-separator {
+    color: #111827;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.pf-integrated-page .atelier-price-track,
+.pf-integrated-page .atelier-price-labels {
+    display: none !important;
+}
+
+.pf-integrated-page .atelier-filter-actions {
+    margin-top: 26px;
+}
+
+.pf-integrated-page .atelier-filter-btn {
+    background: #111C77;
+    color: #fff;
+    border: 1px solid #111C77;
+    min-height: 46px;
+    padding: 0 18px;
+}
+
+.pf-integrated-page .atelier-clear-btn {
+    background: #fff;
+    color: #111C77;
+    border: 1px solid #111C77;
+    min-height: 46px;
+    padding: 0 18px;
+}
+
+@media (max-width: 420px) {
+    .pf-integrated-page .atelier-price-inputs.atelier-price-boxes {
+        grid-template-columns: 1fr;
+    }
+
+    .pf-integrated-page .atelier-price-separator {
+        text-align: center;
+    }
+}

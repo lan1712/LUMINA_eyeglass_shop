@@ -224,7 +224,7 @@ require_once BASE_PATH . '/app/views/partials/head.php';
                 </div>
 
                 <div class="lp05-center-action">
-                    <a class="lp05-btn lp05-btn-primary" href="<?= e(APP_URL) ?>/checkout.php">Bắt đầu làm kính ngay</a>
+                    <a class="lp05-btn lp05-btn-primary" href="<?= e(APP_URL) ?>/prescription-start.php">Bắt đầu làm kính ngay</a>
                 </div>
             </div>
         </section>
